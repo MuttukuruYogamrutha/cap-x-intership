@@ -1,0 +1,2 @@
+tweets_df.to_csv('scraped_tweets.csv', index=False)
+print("Data saved to scraped_tweets.csv")
