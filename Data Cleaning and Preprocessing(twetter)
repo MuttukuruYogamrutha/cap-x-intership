@@ -1,0 +1,10 @@
+# Optionally, clean the text (remove URLs, special characters, etc.)
+import re
+
+def clean_text(text):
+    text = re.sub(r'http\S+|www\S+|https\S+', '', text, flags=re.MULTILINE)  # Remove URLs
+    text = re.sub(r'\@\w+|\#', '', text)  # Remove mentions and hashtags
+    text = re.sub(r'[^A-Za-z0-9\s]', '', text)  # Remove special characters
+    return text.lower()  # Convert to lowercase
+
+tweets_df['cleaned_text'] = tweets_df['text'].apply(clean_text)
