@@ -1,0 +1,26 @@
+import pandas as pd
+
+def scrape_subreddit(subreddit_name, limit=100):
+    subreddit = reddit.subreddit(subreddit_name)
+    posts = []
+
+    # Scraping the latest posts
+    for submission in subreddit.new(limit=limit):  # Change .new to .hot or .top for different sorting
+        posts.append({
+            'title': submission.title,
+            'selftext': submission.selftext,
+            'url': submission.url,
+            'created_utc': submission.created_utc,
+            'score': submission.score,
+            'num_comments': submission.num_comments
+        })
+
+    # Convert to DataFrame
+    df = pd.DataFrame(posts)
+    return df
+
+# Scraping the r/stocks subreddit
+subreddit_df = scrape_subreddit('stocks', limit=100)  # Adjust limit as needed
+
+# Display the scraped data
+print(subreddit_df.head())
