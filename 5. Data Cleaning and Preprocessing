@@ -1,0 +1,13 @@
+# Remove rows with empty text
+messages_df = messages_df[messages_df['text'].notna()]
+
+# Optionally, clean the text (remove URLs, special characters, etc.)
+import re
+
+def clean_text(text):
+    text = re.sub(r'http\S+|www\S+|https\S+', '', text, flags=re.MULTILINE)
+    text = re.sub(r'\@\w+|\#', '', text)
+    text = re.sub(r'[^A-Za-z0-9\s]', '', text)
+    return text.lower()
+
+messages_df['cleaned_text'] = messages_df['text'].apply(clean_text)
