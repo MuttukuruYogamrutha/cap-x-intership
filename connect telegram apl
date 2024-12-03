@@ -1,0 +1,17 @@
+pip install telethon
+from telethon import TelegramClient
+
+# Replace 'YOUR_API_ID' and 'YOUR_API_HASH' with your actual values
+api_id = 'YOUR_API_ID'
+api_hash = 'YOUR_API_HASH'
+
+# Create a new Telegram client
+client = TelegramClient('session_name', api_id, api_hash)
+
+async def main():
+    await client.start()
+    print("Client Created")
+
+# Run the client
+with client:
+    client.loop.run_until_complete(main())
