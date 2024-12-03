@@ -1,0 +1,32 @@
+import pandas as pd
+from telethon.tl.types import PeerChannel
+
+async def scrape_channel(channel_username):
+    # Get the channel entity
+    channel = await client.get_entity(channel_username)
+
+    # Create an empty list to store messages
+    messages = []
+
+    # Iterate over messages in the channel
+    async for message in client.iter_messages(channel):
+        messages.append({
+            'id': message.id,
+            'date': message.date,
+            'sender_id': message.sender_id,
+            'text': message.message,
+            'likes': message.reactions.count if message.reactions else 0
+        })
+
+    # Convert messages to a DataFrame
+    df = pd.DataFrame(messages)
+    return df
+
+# Replace 'channel_username' with the actual username of the channel or group
+channel_username = 'your_channel_username'
+
+with client:
+    messages_df = client.loop.run_until_complete(scrape_channel(channel_username))
+
+# Display the scraped messages
+print(messages_df.head())
