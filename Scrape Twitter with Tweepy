@@ -1,0 +1,21 @@
+pip install tweepy
+import tweepy
+
+# Replace these with your actual values
+api_key = 'YOUR_API_KEY'
+api_key_secret = 'YOUR_API_KEY_SECRET'
+access_token = 'YOUR_ACCESS_TOKEN'
+access_token_secret = 'YOUR_ACCESS_TOKEN_SECRET'
+
+# Authenticate to Twitter
+auth = tweepy.OAuth1User Handler(api_key, api_key_secret, access_token, access_token_secret)
+
+# Create an API object
+api = tweepy.API(auth)
+
+# Verify the connection
+try:
+    api.verify_credentials()
+    print("Authentication OK")
+except Exception as e:
+    print("Error during authentication", e)
