@@ -1,0 +1,26 @@
+import pandas as pd
+
+def scrape_tweets(keyword, count=100):
+    tweets = []
+    
+    # Use the Cursor to search for tweets
+    for tweet in tweepy.Cursor(api.search_tweets, q=keyword, lang="en", tweet_mode='extended').items(count):
+        tweets.append({
+            'tweet_id': tweet.id,
+            'created_at': tweet.created_at,
+            'user': tweet.user.screen_name,
+            'text': tweet.full_text,
+            'retweet_count': tweet.retweet_count,
+            'favorite_count': tweet.favorite_count
+        })
+    
+    # Convert to DataFrame
+    df = pd.DataFrame(tweets)
+    return df
+
+# Example: Scraping tweets containing the keyword "stocks"
+keyword = "stocks"
+tweets_df = scrape_tweets(keyword, count=100)  # Adjust the count as needed
+
+# Display the scraped tweets
+print(tweets_df.head())
