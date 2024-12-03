@@ -1,0 +1,14 @@
+# Remove rows with empty title and selftext
+subreddit_df.dropna(subset=['title', 'selftext'], inplace=True)
+
+# Optionally, clean the text (remove URLs, special characters, etc.)
+import re
+
+def clean_text(text):
+    text = re.sub(r'http\S+|www\S+|https\S+', '', text, flags=re.MULTILINE)  # Remove URLs
+    text = re.sub(r'\@\w+|\#', '', text)  # Remove mentions and hashtags
+    text = re.sub(r'[^A-Za-z0-9\s]', '', text)  # Remove special characters
+    return text.lower()  # Convert to lowercase
+
+subreddit_df['cleaned_title'] = subreddit_df['title'].apply(clean_text)
+subreddit_df['cleaned_selftext'] = subreddit_df['selftext'].apply(clean_text)
